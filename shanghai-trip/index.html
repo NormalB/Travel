@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="sunset-warm">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상하이 4박 5일 여행 계획</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" id="theme-link" href="assets/themes/sunset-warm.css">
+<link rel="stylesheet" href="assets/animations/animations.css">
+<style>
+/* 한글 글꼴을 모든 테마보다 우선 적용 (T 키로 테마를 바꿔도 유지) */
+html:root{--font-sans:'Inter','Noto Sans KR','Noto Sans SC','Malgun Gothic',sans-serif;--font-display:var(--font-sans)}
+.slide{padding:84px 112px}
+.kicker{font-size:18px}
+.lede{font-size:26px}
+.h2{font-size:58px}
+.card h4{font-size:24px;margin:0 0 8px}
+.card p,.card li{font-size:19px}
+.zh{font-weight:400;color:var(--text-3);font-size:.8em;margin-left:.25em}
+
+/* 출발 전 확인 표시 */
+.chk{display:inline-block;padding:3px 12px;border-radius:999px;font-size:14px;font-weight:600;vertical-align:middle;
+  background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--text-1);
+  border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);white-space:nowrap}
+.chk::before{content:"⚠ "}
+
+/* 섹션 전환 */
+.divider-accent{width:96px;height:6px;border-radius:3px;background:var(--grad)}
+
+/* 목차 */
+.toc .num{font-size:40px;font-weight:800;color:var(--accent);width:72px;flex-shrink:0}
+
+/* KPI */
+.kpi .big{font-size:76px;font-weight:800;line-height:1.1;color:var(--text-1)}
+.kpi .big small{font-size:30px;font-weight:600;color:var(--text-2);margin-left:4px}
+
+/* 타임라인 */
+.tl{position:relative;margin-top:56px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:58px;height:3px;background:var(--border-strong)}
+.tl .items{display:grid;grid-template-columns:repeat(5,1fr);gap:28px}
+.tl .item{position:relative;padding-top:100px;text-align:center}
+.tl .dot{position:absolute;top:44px;left:50%;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;background:var(--accent);border:5px solid var(--bg);box-shadow:0 0 0 3px var(--accent)}
+.tl .day{position:absolute;top:0;left:0;right:0;font-size:18px;color:var(--text-3);letter-spacing:.1em;font-weight:700}
+.tl h4{font-size:26px;margin:0 0 10px}
+.tl p{font-size:18px;color:var(--text-2);line-height:1.6;margin:0}
+
+/* 일자별 상세 */
+.dayv{display:grid;grid-template-columns:.7fr 1.3fr;gap:64px;flex:1;min-height:0}
+.dayv > div{display:flex;flex-direction:column;justify-content:center;min-height:0}
+.dayv .img-frame{--img-ratio:4/5;height:100%;width:auto;max-width:100%;align-self:center}
+.sched{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.slot{display:grid;grid-template-columns:96px 1fr;gap:20px;padding:18px 24px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface)}
+.slot .when{font-size:20px;font-weight:700;color:var(--accent);padding-top:4px}
+.slot h4{font-size:26px;margin:0 0 4px}
+.slot p{font-size:19px;color:var(--text-2);margin:0;line-height:1.55}
+.slot .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:8px;font-size:17px;color:var(--text-3)}
+
+/* 맛집 */
+.food .card{display:flex;flex-direction:column}
+.food .emoji{font-size:52px;line-height:1;margin-bottom:12px}
+.food ul{padding-left:22px;margin:10px 0 0;color:var(--text-2);line-height:1.7}
+
+/* 교통 단계 */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:52px}
+.step{position:relative;padding:34px 28px 26px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.step .num{position:absolute;top:-28px;left:26px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px}
+.step h4{margin:14px 0 10px;font-size:24px}
+.step p{font-size:18px;color:var(--text-2);line-height:1.6;margin:0}
+.step .tag{display:inline-block;margin-top:14px;font-size:15px;padding:4px 12px;border-radius:999px;background:var(--surface-2);color:var(--text-2)}
+
+/* 예산 */
+.t{width:100%;border-collapse:collapse;font-size:20px}
+.t th,.t td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.t th{font-size:15px;letter-spacing:.08em;color:var(--text-3);font-weight:600}
+.t td.num,.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+.t tfoot td{font-weight:800;border-bottom:none;font-size:22px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:10px;vertical-align:middle}
+.donut{width:400px;aspect-ratio:1;border-radius:50%;margin:0 auto;position:relative;
+  --c1:var(--accent);--c2:var(--accent-2);--c3:var(--accent-3);--c4:var(--good);
+  --c5:color-mix(in srgb,var(--accent) 45%,var(--text-1));--c6:color-mix(in srgb,var(--accent-2) 40%,var(--bg));--c7:var(--text-3);
+  background:conic-gradient(var(--c1) 0 29.2%,var(--c2) 0 55.9%,var(--c3) 0 74.2%,var(--c4) 0 79.2%,var(--c5) 0 85%,var(--c6) 0 93.3%,var(--c7) 0 100%)}
+.donut::after{content:"";position:absolute;inset:24%;border-radius:50%;background:var(--surface)}
+.donut .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
+.donut .mid b{font-size:48px;line-height:1.1}
+.donut .mid span{font-size:17px;color:var(--text-3)}
+
+/* 체크리스트 */
+.todo{margin:26px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+.todo li{list-style:none;display:flex;align-items:flex-start;gap:16px;padding:16px 6px;border-bottom:1px solid var(--border)}
+.todo .b{flex-shrink:0;width:26px;height:26px;border:2px solid var(--border-strong);border-radius:7px;margin-top:3px}
+.todo .t2{font-size:21px;line-height:1.45}
+.todo .t2 small{display:block;font-size:16px;color:var(--text-3);margin-top:2px}
+
+/* 주의사항 */
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:34px}
+.pc .card h3{display:flex;align-items:center;gap:12px;font-size:28px;margin:0 0 6px}
+.pc .card h3 .b{display:inline-flex;width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;font-size:22px}
+.pc .pro h3 .b{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.pc .con h3 .b{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.pc ul{padding-left:24px;line-height:1.75;color:var(--text-2);font-size:20px;margin:8px 0 0}
+.pc ul li{margin:4px 0}
+.pc .pro{border-top:4px solid var(--good)}
+.pc .con{border-top:4px solid var(--bad)}
+
+/* 날씨 */
+.stat{font-size:220px;line-height:1;font-weight:900;letter-spacing:-.04em}
+.stat small{font-size:.35em;letter-spacing:0}
+
+/* 마무리 질문 */
+.qs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px;text-align:left}
+.qs .card p{margin:0}
+</style>
+</head>
+<body data-themes="sunset-warm,japanese-minimal,magazine-bold" data-theme-base="assets/themes/">
+<div class="deck">
+
+  <!-- 1. 표지 -->
+  <section class="slide" data-title="표지">
+    <div class="deck-header"><span class="eyebrow">Travel Plan · 2026</span><span class="eyebrow">上海 · Shanghai</span></div>
+    <p class="kicker anim-fade-down" data-anim="fade-down">4 Nights 5 Days · 맛집 · 야경 · 쇼핑</p>
+    <h1 class="h1 anim-fade-up" data-anim="fade-up" style="font-size:120px;line-height:1.08">상하이 <span class="gradient-text">4박 5일</span><br>여행 계획</h1>
+    <p class="lede mt-m">너무 빡빡하지 않게, 먹고 걷고 야경 보는 겨울 상하이</p>
+    <div class="row wrap mt-l" style="gap:12px">
+      <span class="pill pill-accent" style="font-size:18px;padding:8px 18px">2026.12.1 (화) – 12.5 (토)</span>
+      <span class="pill" style="font-size:18px;padding:8px 18px">성인 2명</span>
+      <span class="pill" style="font-size:18px;padding:8px 18px">인천 ICN → 푸둥 PVG</span>
+      <span class="pill" style="font-size:18px;padding:8px 18px">1인 예산 120만 원</span>
+    </div>
+    <div class="deck-footer"><span class="dim2">일정 공유 &amp; 의견 수렴용</span><span class="slide-number"></span></div>
+    <aside class="notes">오늘은 12월 초에 가는 상하이 4박 5일 일정을 같이 보려고 해요. 방향은 맛집, 야경, 적당한 쇼핑이고 일정은 여유 있게 잡았어요. 끝까지 보고 바꾸고 싶은 곳이 있으면 편하게 얘기해 줘요.</aside>
+  </section>
+
+  <!-- 2. 목차 -->
+  <section class="slide toc" data-title="목차">
+    <p class="kicker">Contents · 목차</p>
+    <h2 class="h2">오늘 같이 볼 내용</h2>
+    <div class="grid g2 mt-l">
+      <div class="card"><div class="row"><div class="num">01</div><div><h4>여행 한눈에 보기</h4><p class="dim">일정, 예산, 숙소 후보 지역</p></div></div></div>
+      <div class="card"><div class="row"><div class="num">02</div><div><h4>Day 1–5 일정</h4><p class="dim">하루씩 동선, 이동, 식사</p></div></div></div>
+      <div class="card"><div class="row"><div class="num">03</div><div><h4>맛집 리스트</h4><p class="dim">샤오룽바오, 성젠, 훠궈</p></div></div></div>
+      <div class="card"><div class="row"><div class="num">04</div><div><h4>교통 · 예산</h4><p class="dim">공항 이동법, 1인 예산 배분</p></div></div></div>
+      <div class="card"><div class="row"><div class="num">05</div><div><h4>준비물 · 주의사항 · 날씨</h4><p class="dim">결제, 인터넷, 옷차림</p></div></div></div>
+      <div class="card"><div class="row"><div class="num">06</div><div><h4>의견 나누기</h4><p class="dim">정해야 할 것들</p></div></div></div>
+    </div>
+    <aside class="notes">순서는 전체 개요, 하루별 일정, 맛집, 그리고 교통과 예산, 준비물 순서예요. 마지막에 같이 정해야 할 것들을 모아 뒀어요.</aside>
+  </section>
+
+  <!-- 3. 한눈에 보기 -->
+  <section class="slide kpi" data-title="한눈에 보기">
+    <p class="kicker">Overview · 여행 한눈에 보기</p>
+    <h2 class="h2">4박 5일, 상하이 한 도시에 집중</h2>
+    <div class="grid g4 mt-l">
+      <div class="card"><p class="eyebrow">기간</p><div class="big">4<small>박</small> 5<small>일</small></div><p class="dim">12/1 (화) – 12/5 (토)</p></div>
+      <div class="card"><p class="eyebrow">도시</p><div class="big">1<small>곳</small></div><p class="dim">상하이 上海 + 주자자오 당일치기</p></div>
+      <div class="card"><p class="eyebrow">1인 예산</p><div class="big">120<small>만 원</small></div><p class="dim">항공 포함 · 2인 합계 240만 원</p></div>
+      <div class="card"><p class="eyebrow">주 이동 수단</p><div class="big">🚇<small>지하철</small></div><p class="dim">짧은 거리·밤에는 디디 택시</p></div>
+    </div>
+    <div class="card card-soft mt-l" style="display:flex;gap:28px;align-items:center">
+      <div style="font-size:44px">🏨</div>
+      <div><h4 style="margin:0 0 4px">숙소는 아직 미정 → 추천 지역: 난징동루 南京东路 · 인민광장 人民广场</h4>
+      <p class="dim" style="margin:0">지하철 1·2·8·10호선이 모여 있어 이동이 편하고, 와이탄 야경까지 걸어서 갈 수 있어요. <span class="chk">숙박비 출발 전 확인</span></p></div>
+    </div>
+    <aside class="notes">핵심은 상하이 한 도시에만 머무는 거예요. 숙소는 아직 안 정했는데, 교통이 편하고 와이탄까지 걸어갈 수 있는 난징동루나 인민광장 근처를 추천해요. 숙소 지역은 오늘 같이 정했으면 해요.</aside>
+  </section>
+
+  <!-- 4. 섹션: 일정 -->
+  <section class="slide tc center" data-title="Part 1 · 일정">
+    <div style="max-width:1100px;margin:0 auto">
+      <p class="kicker anim-fade-down" data-anim="fade-down">Part · 01</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:132px">하루하루 <span class="gradient-text">일정</span></h1>
+      <div class="divider-accent" style="margin:28px auto"></div>
+      <p class="lede" style="margin:0 auto">오전·오후·저녁 한 곳씩, 쉬는 시간은 넉넉하게</p>
+    </div>
+    <aside class="notes">이제 하루별 일정을 볼게요. 하루에 오전, 오후, 저녁 한 곳씩만 넣어서 중간에 카페 가거나 숙소에서 쉴 시간을 남겨 뒀어요.</aside>
+  </section>
+
+  <!-- 5. 전체 일정 -->
+  <section class="slide" data-title="전체 일정">
+    <p class="kicker">Itinerary · 전체 일정</p>
+    <h2 class="h2">5일 흐름 한눈에</h2>
+    <div class="tl">
+      <div class="items">
+        <div class="item"><div class="day">DAY 1 · 12/1 화</div><div class="dot"></div><h4>도착 &amp; 와이탄</h4><p>푸둥공항 도착<br>난징동루 산책<br>와이탄 첫 야경</p></div>
+        <div class="item"><div class="day">DAY 2 · 12/2 수</div><div class="dot"></div><h4>예원 &amp; 루자쭈이</h4><p>예원·성황묘<br>동방명주 전망<br>황푸강 야경 크루즈</p></div>
+        <div class="item"><div class="day">DAY 3 · 12/3 목</div><div class="dot"></div><h4>수향마을</h4><p>주자자오 당일치기<br>저녁 신톈디<br>훠궈 디너</p></div>
+        <div class="item"><div class="day">DAY 4 · 12/4 금</div><div class="dot"></div><h4>산책 &amp; 쇼핑</h4><p>우캉루 카페 산책<br>톈쯔팡 골목<br>난징시루 쇼핑</p></div>
+        <div class="item"><div class="day">DAY 5 · 12/5 토</div><div class="dot"></div><h4>귀국</h4><p>성젠으로 아침<br>체크아웃<br>푸둥공항 출발</p></div>
+      </div>
+    </div>
+    <aside class="notes">전체 흐름이에요. 첫날과 마지막 날은 이동 위주고, 가운데 사흘에 주요 명소를 나눴어요. 3일차 주자자오는 시내에서 좀 멀어서, 날씨 보고 4일차와 바꿔도 돼요.</aside>
+  </section>
+
+  <!-- 6. Day 1 -->
+  <section class="slide" data-title="Day 1">
+    <div class="dayv">
+      <div>
+        <figure class="img-frame">
+          <img src="assets/demo-images/photo-portrait.svg" alt="와이탄(外滩) 야경 사진: 황푸강 건너 루자쭈이 스카이라인과 조명이 켜진 근대 건축물">
+          <span class="img-tag">와이탄 外滩</span>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Day 1 · 12월 1일 (화)</p>
+        <h2 class="h2">도착하고, 와이탄 야경으로 시작</h2>
+        <div class="sched">
+          <div class="slot"><div class="when">오전</div><div><h4>인천 출발 → 푸둥공항 浦东机场 도착</h4><p>비행 약 2시간, 시차 −1시간. 입국 후 유심/eSIM 개통 확인.</p><div class="meta"><span>✈ 오전 출발 항공편 추천</span><span class="chk">항공 시간 확정 필요</span></div></div></div>
+          <div class="slot"><div class="when">오후</div><div><h4>시내 이동 → 숙소 체크인 → 휴식</h4><p>자기부상열차 + 지하철 2호선, 또는 디디 택시로 난징동루까지.</p><div class="meta"><span>🚄 약 60–75분</span><span>🍽 점심: 공항·숙소 근처 간단히</span></div></div></div>
+          <div class="slot"><div class="when">저녁</div><div><h4>난징동루 南京东路 산책 → 와이탄 外滩 야경</h4><p>보행자 거리를 따라 걸으면 와이탄까지 약 15분.</p><div class="meta"><span>🚶 도보 15분</span><span>🍽 저녁: 난징동루 로컬 식당</span><span>🌃 조명 점등 저녁 6시 전후 <span class="chk">출발 전 확인</span></span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">첫날은 무리하지 않는 게 목표예요. 오전 비행기로 도착해서 체크인하고 좀 쉰 다음, 저녁에 난징동루를 걸어서 와이탄 야경을 보는 걸로 마무리해요.</aside>
+  </section>
+
+  <!-- 7. Day 2 -->
+  <section class="slide" data-title="Day 2">
+    <div class="dayv">
+      <div>
+        <figure class="img-frame">
+          <img src="assets/demo-images/photo-square.svg" alt="예원(豫园) 사진: 전통 정원의 연못과 구곡교, 처마가 올라간 누각">
+          <span class="img-tag">예원 豫园</span>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Day 2 · 12월 2일 (수)</p>
+        <h2 class="h2">옛 상하이에서 미래 상하이로</h2>
+        <div class="sched">
+          <div class="slot"><div class="when">오전</div><div><h4>예원 豫园 · 성황묘 城隍庙</h4><p>정원 관람 후 주변 상점가 구경. 오전 일찍 가야 덜 붐벼요.</p><div class="meta"><span>🚇 10호선 예원역 · 약 10분</span><span>🎫 입장료 약 40위안 <span class="chk">출발 전 확인</span></span><span>🍽 점심: 난샹만두점 샤오룽바오</span></div></div></div>
+          <div class="slot"><div class="when">오후</div><div><h4>루자쭈이 陆家嘴 · 동방명주 东方明珠</h4><p>해 질 무렵 전망대에 올라 낮과 야경을 한 번에. 대안: 상하이타워 上海中心.</p><div class="meta"><span>🚇 14호선 또는 페리 · 약 20분</span><span>🎫 전망대 약 120–200위안 <span class="chk">출발 전 확인</span></span></div></div></div>
+          <div class="slot"><div class="when">저녁</div><div><h4>황푸강 黄浦江 야경 크루즈</h4><p>배 위에서 와이탄과 루자쭈이를 양쪽으로 감상. 약 50분.</p><div class="meta"><span>⛴ 동창루/스류푸 선착장</span><span>🍽 저녁: 루자쭈이 쇼핑몰 내 식당</span><span class="chk">운항 시간 확인</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">둘째 날은 옛 상하이와 새 상하이를 하루에 봐요. 오전엔 예원에서 샤오룽바오 먹고, 오후엔 강 건너 동방명주에서 해 지는 걸 보고, 밤에는 유람선을 타요. 전망대는 동방명주랑 상하이타워 중에 하나 골라 주세요.</aside>
+  </section>
+
+  <!-- 8. Day 3 -->
+  <section class="slide" data-title="Day 3">
+    <div class="dayv">
+      <div>
+        <figure class="img-frame">
+          <img src="assets/demo-images/photo-portrait.svg" alt="주자자오(朱家角) 수향마을 사진: 운하 위 돌다리 방생교와 나룻배, 물가의 옛 가옥">
+          <span class="img-tag">주자자오 朱家角</span>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Day 3 · 12월 3일 (목)</p>
+        <h2 class="h2">물의 마을 당일치기</h2>
+        <div class="sched">
+          <div class="slot"><div class="when">오전</div><div><h4>주자자오 수향마을 朱家角 이동</h4><p>인민광장 → 2호선 훙차오역 → 17호선 주자자오역. 평일이라 한적해요.</p><div class="meta"><span>🚇 약 1시간 30분</span><span>🚕 디디 약 1시간</span></div></div></div>
+          <div class="slot"><div class="when">오후</div><div><h4>운하 산책 · 방생교 放生桥 · 나룻배</h4><p>골목 따라 걷고, 나룻배 타고, 간식 먹으며 여유롭게.</p><div class="meta"><span>🎫 마을 입장 무료, 나룻배 별도 <span class="chk">출발 전 확인</span></span><span>🍽 점심: 수향마을 강변 식당</span></div></div></div>
+          <div class="slot"><div class="when">저녁</div><div><h4>시내 복귀 → 신톈디 新天地</h4><p>석고문 건물을 개조한 거리에서 저녁과 산책.</p><div class="meta"><span>🚇 10·13호선 신톈디역</span><span>🍽 저녁: 훠궈 (하이디라오 등)</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">셋째 날은 시내를 벗어나 주자자오 수향마을에 가요. 지하철로 한 시간 반 정도라 아침을 조금 일찍 시작해야 해요. 저녁엔 신톈디로 돌아와서 훠궈 먹는 일정인데, 너무 피곤하면 숙소 근처로 바꿔도 괜찮아요.</aside>
+  </section>
+
+  <!-- 9. Day 4 -->
+  <section class="slide" data-title="Day 4">
+    <div class="dayv">
+      <div>
+        <figure class="img-frame">
+          <img src="assets/demo-images/photo-square.svg" alt="우캉루(武康路) 사진: 플라타너스 가로수길과 우캉대루(武康大楼) 건물 모서리">
+          <span class="img-tag">우캉루 武康路</span>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Day 4 · 12월 4일 (금)</p>
+        <h2 class="h2">카페 산책과 쇼핑의 날</h2>
+        <div class="sched">
+          <div class="slot"><div class="when">오전</div><div><h4>늦잠 → 우캉루 武康路 · 안푸루 安福路 산책</h4><p>옛 프랑스 조계지의 가로수길. 카페에서 브런치.</p><div class="meta"><span>🚇 10·11호선 자오퉁대학역 · 약 25분</span><span>🍽 브런치: 우캉루 카페</span></div></div></div>
+          <div class="slot"><div class="when">오후</div><div><h4>톈쯔팡 田子坊 골목 구경</h4><p>좁은 골목에 공방, 소품숍, 작은 갤러리가 모여 있어요.</p><div class="meta"><span>🚇 9호선 다푸차오역 · 약 20분</span><span>🛍 기념품·소품 쇼핑</span></div></div></div>
+          <div class="slot"><div class="when">저녁</div><div><h4>난징시루 南京西路 · 징안쓰 静安寺 쇼핑</h4><p>대형 쇼핑몰 구경하고, 마지막 밤 야경 한 번 더.</p><div class="meta"><span>🚇 2호선 · 약 15분</span><span>🍽 저녁: 상하이 본방 요리 本帮菜</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">넷째 날은 제일 여유로운 날이에요. 늦게 일어나서 우캉루에서 브런치하고, 오후엔 톈쯔팡, 저녁엔 난징시루에서 쇼핑해요. 쇼핑을 많이 하고 싶으면 이날 시간을 더 늘리면 돼요.</aside>
+  </section>
+
+  <!-- 10. Day 5 -->
+  <section class="slide" data-title="Day 5">
+    <div class="dayv">
+      <div>
+        <figure class="img-frame">
+          <img src="assets/demo-images/photo-portrait.svg" alt="성젠(生煎) 사진: 철판 위에서 바닥을 바삭하게 구운 군만두, 참깨와 파를 뿌린 모습">
+          <span class="img-tag">성젠 生煎</span>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Day 5 · 12월 5일 (토)</p>
+        <h2 class="h2">든든하게 먹고, 귀국</h2>
+        <div class="sched">
+          <div class="slot"><div class="when">오전</div><div><h4>성젠 아침 → 체크아웃</h4><p>숙소 근처 샤오양성젠에서 아침. 짐은 호텔에 맡기고 가볍게 산책.</p><div class="meta"><span>🍽 아침: 샤오양성젠 小杨生煎</span><span>🧳 짐 보관 가능 여부 <span class="chk">숙소 확인</span></span></div></div></div>
+          <div class="slot"><div class="when">오후</div><div><h4>푸둥공항 浦东机场 이동</h4><p>출발 3시간 전 도착 목표. 주말이라 여유 있게 출발해요.</p><div class="meta"><span>🚄 자기부상열차 + 지하철 약 60–75분</span><span>🚕 디디 약 50–60분</span></div></div></div>
+          <div class="slot"><div class="when">저녁</div><div><h4>인천 도착</h4><p>남은 위안화는 공항 면세점에서 쓰거나 알리페이 잔액만 확인.</p><div class="meta"><span>✈ 귀국 항공편 <span class="chk">시간 확정 필요</span></span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">마지막 날은 성젠으로 아침 먹고 바로 공항으로 가요. 출발 세 시간 전에는 공항에 도착하도록 잡았어요. 항공권 시간이 정해지면 이날 일정을 다시 맞출게요.</aside>
+  </section>
+
+  <!-- 11. 맛집 -->
+  <section class="slide food" data-title="맛집 리스트">
+    <p class="kicker">Food · 꼭 먹을 것</p>
+    <h2 class="h2">상하이에서 먹어야 할 세 가지</h2>
+    <div class="grid g3 mt-l">
+      <div class="card card-accent"><div class="emoji">🥟</div><h4>샤오룽바오 小笼包</h4><p class="dim">얇은 피 안에 뜨거운 육즙. 숟가락에 올려 살짝 터뜨려 먹기.</p>
+        <ul><li>난샹만두점 南翔馒头店 · 예원 (Day 2)</li><li>자자탕바오 佳家汤包 · 인민광장</li><li>딘타이펑 鼎泰丰 · 신톈디</li></ul></div>
+      <div class="card card-accent"><div class="emoji">🍳</div><h4>성젠 生煎</h4><p class="dim">바닥은 바삭, 속은 육즙 가득한 상하이식 군만두. 아침으로 딱.</p>
+        <ul><li>샤오양성젠 小杨生煎 · 시내 곳곳 (Day 5)</li><li>다후춘 大壶春 · 난징동루 부근</li></ul></div>
+      <div class="card card-accent"><div class="emoji">🍲</div><h4>훠궈 火锅</h4><p class="dim">추운 12월 저녁엔 뜨끈한 훠궈. 반반 냄비로 맵기 조절.</p>
+        <ul><li>하이디라오 海底捞 · 신톈디 부근 (Day 3)</li><li>그 밖에: 상하이 본방 요리 本帮菜 (홍사오러우)</li></ul></div>
+    </div>
+    <p class="dim mt-m" style="font-size:18px">🕐 영업시간·지점 위치는 바뀔 수 있어요 <span class="chk">출발 전 확인</span> · 인기 식당은 앱으로 대기 등록</p>
+    <aside class="notes">먹는 건 이 세 가지만 꼭 챙기면 돼요. 샤오룽바오는 예원에서, 성젠은 마지막 날 아침에, 훠궈는 3일차 저녁에 넣어 뒀어요. 다른 먹고 싶은 게 있으면 추가해 줘요.</aside>
+  </section>
+
+  <!-- 12. 섹션: 준비 -->
+  <section class="slide tc center" data-title="Part 2 · 준비">
+    <div style="max-width:1100px;margin:0 auto">
+      <p class="kicker anim-fade-down" data-anim="fade-down">Part · 02</p>
+      <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:132px">떠나기 전 <span class="gradient-text">준비</span></h1>
+      <div class="divider-accent" style="margin:28px auto"></div>
+      <p class="lede" style="margin:0 auto">교통 · 예산 · 체크리스트 · 주의사항 · 날씨</p>
+    </div>
+    <aside class="notes">이제 실제로 준비할 것들이에요. 교통이랑 예산을 보고, 출발 전에 꼭 해야 할 것들을 체크할게요.</aside>
+  </section>
+
+  <!-- 13. 교통 -->
+  <section class="slide" data-title="교통 가이드">
+    <p class="kicker">Transport · 교통 가이드</p>
+    <h2 class="h2">공항에서 시내까지, 그리고 시내 이동</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h4>자기부상열차 磁悬浮</h4><p>푸둥공항 → 룽양루 龙阳路, 약 8분. 창밖 속도계 구경은 덤.</p><span class="tag">편도 약 50위안</span> <span class="chk">요금 확인</span></div>
+      <div class="step"><div class="num">2</div><h4>지하철 환승</h4><p>룽양루역에서 2호선 → 난징동루·인민광장까지 약 25분.</p><span class="tag">약 5위안</span></div>
+      <div class="step"><div class="num">3</div><h4>또는 디디 택시 滴滴</h4><p>짐이 많거나 밤 도착이면 공항에서 바로 숙소까지.</p><span class="tag">약 50–60분 · 150–200위안</span></div>
+      <div class="step"><div class="num">4</div><h4>시내 지하철 팁</h4><p>알리페이 '교통카드(乘车码)' QR로 탑승. 역 입구마다 짐 검사가 있어요.</p><span class="tag">출퇴근 시간 피하기</span></div>
+    </div>
+    <div class="card card-soft mt-l"><p style="margin:0">💡 지하철 한 번에 3–6위안 정도. 두 명이면 가까운 거리는 디디가 더 편할 때도 있어요 · 길찾기는 가오더지도 高德地图 추천</p></div>
+    <aside class="notes">공항에서는 자기부상열차를 한 번 타 보는 걸 추천해요. 8분이면 룽양루에 가고, 거기서 지하철 2호선으로 갈아타요. 짐이 많거나 밤에 도착하면 디디 택시가 편해요. 시내에선 알리페이 QR로 지하철을 타면 돼요.</aside>
+  </section>
+
+  <!-- 14. 예산 -->
+  <section class="slide" data-title="예산">
+    <p class="kicker">Budget · 1인 예산 120만 원</p>
+    <h2 class="h2">돈은 이렇게 나눠 쓸 계획</h2>
+    <div class="grid mt-l" style="grid-template-columns:1.25fr .75fr;align-items:center;gap:48px">
+      <div class="card" style="padding:8px 20px">
+        <table class="t">
+          <thead><tr><th>항목</th><th>내용</th><th class="num">1인 (원)</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sw" style="background:var(--accent)"></span>항공</td><td>인천–푸둥 왕복 <span class="chk">시세 확인</span></td><td class="num">350,000</td></tr>
+            <tr><td><span class="sw" style="background:var(--accent-2)"></span>숙박</td><td>4박, 2인 1실 분담 (1박 약 16만 원)</td><td class="num">320,000</td></tr>
+            <tr><td><span class="sw" style="background:var(--accent-3)"></span>식비</td><td>하루 약 4.4만 원 × 5일</td><td class="num">220,000</td></tr>
+            <tr><td><span class="sw" style="background:var(--good)"></span>교통</td><td>자기부상·지하철·디디</td><td class="num">60,000</td></tr>
+            <tr><td><span class="sw" style="background:color-mix(in srgb,var(--accent) 45%,var(--text-1))"></span>입장료</td><td>예원·전망대·크루즈</td><td class="num">70,000</td></tr>
+            <tr><td><span class="sw" style="background:color-mix(in srgb,var(--accent-2) 40%,var(--bg))"></span>쇼핑</td><td>기념품·소품</td><td class="num">100,000</td></tr>
+            <tr><td><span class="sw" style="background:var(--text-3)"></span>예비비</td><td>여행자보험·eSIM·비상금</td><td class="num">80,000</td></tr>
+          </tbody>
+          <tfoot><tr><td>합계</td><td></td><td class="num">1,200,000</td></tr></tfoot>
+        </table>
+      </div>
+      <div>
+        <div class="donut"><div class="mid"><b>120만</b><span>1인 총예산</span></div></div>
+        <p class="dim tc mt-m" style="font-size:17px">환율 1위안 ≈ 190–200원 기준 <span class="chk">출발 전 확인</span></p>
+      </div>
+    </div>
+    <aside class="notes">1인 120만 원 안에서 나눠 봤어요. 항공이랑 숙박이 절반 조금 넘고, 식비는 하루 4만 원대로 잡았어요. 항공권 가격에 따라 쇼핑이나 식비 쪽을 조정하면 될 것 같아요.</aside>
+  </section>
+
+  <!-- 15. 체크리스트 -->
+  <section class="slide" data-title="준비물 체크리스트">
+    <p class="kicker">Checklist · 출발 전 필수</p>
+    <h2 class="h2">출발 전에 끝내야 할 것들</h2>
+    <ul class="todo">
+      <li><span class="b"></span><span class="t2">비자 / 무비자 입국 가능 여부 <span class="chk">출발 전 확인</span><small>현재 한국 여권 단기 무비자 시행 중 · 연장 여부 확인</small></span></li>
+      <li><span class="b"></span><span class="t2">여권 유효기간 6개월 이상<small>만료일 2027년 6월 이후인지 확인</small></span></li>
+      <li><span class="b"></span><span class="t2">알리페이 支付宝 · 위챗페이 微信支付<small>한국 카드 연결 + 본인 인증까지 미리</small></span></li>
+      <li><span class="b"></span><span class="t2">eSIM / 로밍 (데이터)<small>로밍·홍콩 eSIM이면 카카오톡·구글 사용 가능</small></span></li>
+      <li><span class="b"></span><span class="t2">VPN (필요 시)<small>현지 유심이면 필수 · 출국 전 설치</small></span></li>
+      <li><span class="b"></span><span class="t2">디디 DiDi 앱<small>결제 수단 연결, 한국어 지원</small></span></li>
+      <li><span class="b"></span><span class="t2">가오더지도 高德地图<small>구글지도보다 정확한 길찾기</small></span></li>
+      <li><span class="b"></span><span class="t2">번역기 (파파고 등)<small>메뉴판 사진 번역 기능 활용</small></span></li>
+    </ul>
+    <aside class="notes">출발 전에 꼭 해 둘 것들이에요. 제일 중요한 건 무비자 정책 확인이랑 알리페이 세팅이에요. 중국은 현금보다 모바일 결제가 거의 기본이라 한국에서 미리 카드 연결까지 끝내 두는 게 좋아요.</aside>
+  </section>
+
+  <!-- 16. 주의사항 -->
+  <section class="slide" data-title="주의사항">
+    <p class="kicker">Tips · 알아둘 것</p>
+    <h2 class="h2">편한 점과 조심할 점</h2>
+    <div class="pc">
+      <div class="card pro"><h3><span class="b">✓</span> 이렇게 하면 편해요</h3>
+        <ul>
+          <li><b>결제</b> — 거의 모든 곳이 알리페이·위챗페이 QR</li>
+          <li><b>치안</b> — 시내 치안은 좋은 편, 밤 산책도 무난</li>
+          <li><b>교통</b> — 지하철이 촘촘해 대부분 30분 안에 이동</li>
+          <li><b>현금</b> — 비상용 소액(500위안 정도)만 준비</li>
+        </ul>
+      </div>
+      <div class="card con"><h3><span class="b">!</span> 이건 조심해요</h3>
+        <ul>
+          <li><b>인터넷</b> — 카카오톡·구글·인스타는 로밍/eSIM 또는 VPN 필요</li>
+          <li><b>결제</b> — 해외 카드 결제가 거절되면 다른 수단으로 재시도</li>
+          <li><b>날씨</b> — 습한 추위라 체감 온도가 더 낮아요</li>
+          <li><b>호객</b> — 난징동루·와이탄에서 말 거는 사람은 정중히 거절</li>
+        </ul>
+      </div>
+    </div>
+    <p class="dim mt-m" style="font-size:18px">결제·인터넷 관련 정책은 자주 바뀌어요 <span class="chk">출발 전 확인</span></p>
+    <aside class="notes">상하이는 전반적으로 여행하기 편한 도시예요. 다만 카카오톡이나 구글이 그냥은 안 되니까 로밍이나 eSIM을 쓰는 게 제일 간단해요. 그리고 관광지에서 먼저 말 거는 사람은 그냥 정중히 거절하면 돼요.</aside>
+  </section>
+
+  <!-- 17. 날씨 -->
+  <section class="slide center tc" data-title="날씨">
+    <p class="kicker">Weather · 12월 초 상하이</p>
+    <div class="stat mt-m"><span class="gradient-text">4–12<small>°C</small></span></div>
+    <h3 class="mt-s" style="font-size:36px">평균 최저·최고 기온, 서울보다 조금 따뜻하지만 습한 추위</h3>
+    <div class="grid g3 mt-l" style="max-width:1400px;margin-left:auto;margin-right:auto;text-align:left">
+      <div class="card"><h4>🧥 겉옷</h4><p class="dim" style="margin:0">패딩 또는 두꺼운 코트. 바람막이 겸용이면 더 좋아요.</p></div>
+      <div class="card"><h4>🧣 레이어드</h4><p class="dim" style="margin:0">실내는 따뜻해서 니트·히트텍으로 겹쳐 입고 벗기 쉽게.</p></div>
+      <div class="card"><h4>👟 신발 · 우산</h4><p class="dim" style="margin:0">하루 1–2만 보 걷는 일정 · 접이식 우산 챙기기.</p></div>
+    </div>
+    <p class="dim mt-m" style="font-size:18px">예년 평균 기준이에요 <span class="chk">출발 일주일 전 예보 확인</span></p>
+    <aside class="notes">12월 초 상하이는 평균 4도에서 12도 정도예요. 숫자로는 서울보다 따뜻한데, 습해서 체감은 꽤 추워요. 패딩이나 두꺼운 코트 하나랑 편한 신발은 꼭 챙겨 주세요.</aside>
+  </section>
+
+  <!-- 18. 마무리 -->
+  <section class="slide center tc" data-title="의견 나누기">
+    <div style="max-width:1500px;margin:0 auto">
+      <p class="kicker">Q &amp; A · 의견 나누기</p>
+      <h1 class="h1" style="font-size:112px"><span class="gradient-text">어떻게 생각해요?</span></h1>
+      <p class="lede" style="margin:12px auto 0">아래 세 가지만 같이 정하면 예약을 시작할 수 있어요</p>
+      <div class="qs">
+        <div class="card card-accent"><h4>🏨 숙소 지역</h4><p class="dim">난징동루 vs 인민광장 vs 신톈디, 1박 예산은?</p></div>
+        <div class="card card-accent"><h4>🌆 전망대 선택</h4><p class="dim">동방명주 vs 상하이타워, 아니면 크루즈만?</p></div>
+        <div class="card card-accent"><h4>🗓 일정 조정</h4><p class="dim">주자자오 당일치기 유지? 쇼핑 시간 더 늘릴까?</p></div>
+      </div>
+    </div>
+    <aside class="notes">여기까지가 전체 계획이에요. 숙소 지역, 전망대, 그리고 주자자오 일정 이 세 가지만 정하면 바로 항공권이랑 숙소 예약을 시작할게요. 다른 의견도 편하게 말해 줘요.</aside>
+  </section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>
